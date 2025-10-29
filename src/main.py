@@ -1,4 +1,4 @@
-from encoder import EncodeProblemInstance
+from encoder import ProblemInstance
 from parser import ParseArgs
 from solverHandler import HandleSolver
 
@@ -12,7 +12,7 @@ def Main():
 
 	args = ParseArgs()
 	N, G, S, R, T = args.N, args.G, args.S, args.R, args.T
-	problemInstance = EncodeProblemInstance(N, G, S, R, T) # Might neet to return a class with all the info
+	problemInstance = ProblemInstance(N, G, S, R, T)
 	solution = HandleSolver(problemInstance) # Might take in and return a class with all the info
 	return solution
 
