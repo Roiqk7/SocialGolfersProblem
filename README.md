@@ -54,14 +54,16 @@ $$
 
 ## State of application
 
-* Think about the overall architecture
-* Must figure out glucose input
-  * Research the input
-  * Write encoder
-  * Test it
-* Figure out the output
-  * See what it returns
-  * Write decoder
-  * Test it
-* Improve design
-  * Web UI? - desired but not necessary
+* Core
+  * Implement basic work flow
+    * Write glucose interface
+    * Once I get output from glucose, print it
+  * Improve core functionality
+  * Expand and finish
+    * Write the other clauses
+  * Code refactoring
+* Frontend
+  * Create new project (C#, why not?)
+  * Create the static pages
+  * Write backend - basic workflow
+  * Refactor
