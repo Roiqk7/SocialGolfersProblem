@@ -50,3 +50,18 @@ $$
 \quad
 \sum_{r=1}^{R} \sum_{g=1}^{G} (X_{r,p_1,g} \land X_{r,p_2,g}) \le T
 $$
+
+
+## State of application
+
+* Think about the overall architecture
+* Must figure out glucose input
+  * Research the input
+  * Write encoder
+  * Test it
+* Figure out the output
+  * See what it returns
+  * Write decoder
+  * Test it
+* Improve design
+  * Web UI? - desired but not necessary
