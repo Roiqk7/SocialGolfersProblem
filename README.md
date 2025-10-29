@@ -55,13 +55,14 @@ $$
 ## State of application
 
 * Core
-  * Implement basic work flow
-    * Write glucose interface
-    * Once I get output from glucose, print it
   * Improve core functionality
-  * Expand and finish
-    * Write the other clauses
+    * Add correct clause generation
+    * Add correct clause counter
+  * Add result interpreter
+  * Add basic tests + instances
   * Code refactoring
+* Test
+  * Write tests for the Core
 * Frontend
   * Create new project (C#, why not?)
   * Create the static pages
