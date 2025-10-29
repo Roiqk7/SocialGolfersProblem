@@ -1,12 +1,14 @@
-from globals import DEFAULT_CNF_FILE_PATH
+from globals import *
 import math
 from pathlib import Path
 
 class ProblemInstance:
 	def __init__(self, N: int, G: int, S: int, R: int, T: int):
+		logger.debug("Began creating the problem instance...")
 		self._Init(N, G, S, R, T)
 		self._InitOutputFile()
 		self._EncodeClauses()
+		logger.debug("Finished creating the problem instance.")
 
 	def _Init(self, N: int, G: int, S: int, R: int, T: int, InputFile: Path = None):
 		self.N = N
@@ -20,7 +22,10 @@ class ProblemInstance:
 			self.OutputFile = InputFile
 
 	def _EncodeClauses(self):
+		logger.debug("Encoding clauses...")
 		self._EncodeOnePlayerPerGroup()
+		# TODO: Add the other ones
+		logger.debug("Finished encoding clauses")
 
 	def _GetVarID(self, r, p, g) -> int:
 		return r * (self.N * self.G) + p * self.G + g + 1

@@ -1,7 +1,8 @@
 import argparse
-from globals import DEFAULT_CNF_FILE_PATH, DEFAULT_SOLVER_OUTPUT_FILE_PATH
+from globals import *
 
 def ParseArgs():
+	logger.debug("Parsing arguments...")
 	parser = argparse.ArgumentParser(description="Social Golfers SAT Solver")
 	parser.add_argument("--N", type=int, default=32, help="Number of golfers (default: 32)")
 	parser.add_argument("--G", type=int, default=8, help="Number of groups per round (default: 8)")
@@ -12,6 +13,7 @@ def ParseArgs():
 	parser.add_argument("--O", type=str, default=DEFAULT_SOLVER_OUTPUT_FILE_PATH, help=f"Output file of the SAT solver (default: {DEFAULT_SOLVER_OUTPUT_FILE_PATH}")
 	args = parser.parse_args()
 	CheckArgs(args)
+	logger.info(f"Args: {args}")
 	return args
 
 def CheckArgs(args):
