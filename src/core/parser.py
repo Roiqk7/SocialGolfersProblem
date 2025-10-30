@@ -14,6 +14,7 @@ def ParseArgs():
 	args = parser.parse_args()
 	CheckArgs(args)
 	logger.info(f"Args: {args}")
+	logger.debug("Finished parsing arguments.")
 	return args
 
 def CheckArgs(args):

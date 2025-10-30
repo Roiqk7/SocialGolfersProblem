@@ -8,7 +8,7 @@ class SolverHandler:
 		self._Init(pi, verbosity)
 		rawResult = self.CallSolver()
 		self.WriteResult(rawResult)
-		logger.debug("Finished handling the problem instance")
+		logger.debug("Finished handling the problem instance.")
 
 	def _Init(self, pi: ProblemInstance, verbosity: int):
 		self.InputFile = pi.OutputFile
@@ -27,7 +27,7 @@ class SolverHandler:
 				"-model",
 				"-verb=" + str(self.Verbosity)
 			]
-			logger.debug("Executing SAT solver command: %s", " ".join(command))
+			logger.info("Executing SAT solver command: %s", " ".join(command))
 			return subprocess.run(command, stdin=f, stdout=subprocess.PIPE)
 
 	def WriteResult(self, result):
