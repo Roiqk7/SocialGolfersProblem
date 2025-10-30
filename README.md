@@ -126,6 +126,10 @@ $$
 
 ## State of application
 
+* Other
+  * Fix github latex rendering
+    * The tables are broken
+    * The ^* is also weird.
 * Core
   * Improve core functionality
     * Add correct clause generation
