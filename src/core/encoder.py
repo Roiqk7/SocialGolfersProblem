@@ -41,10 +41,12 @@ class ProblemInstance:
 		return self.N * self.G * self.R
 
 	def _GetNumberOfClauses(self) -> int:
+		# R * N is the count of "at least one in group"
+		# R * N * C(G, 2) covers the "at most one in group".
+		onePlayer = self.R * self.N * (1 + (self.G * (self.G - 1)) // 2)
 		# TODO: Find correct count
-		onePlayer = 10000
-		groupSize = 10000
-		pairConstraints = 10000
+		groupSize = 0
+		pairConstraints = 0
 		return onePlayer + groupSize + pairConstraints
 
 	def _InitOutputFile(self):
@@ -67,3 +69,4 @@ class ProblemInstance:
 					for g2 in range(g1 + 1, self.G):
 						self._WriteClause(
 							[-self._GetVarID(r, p, g1), -self._GetVarID(r, p, g2)])
+
