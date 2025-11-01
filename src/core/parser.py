@@ -1,5 +1,6 @@
 import argparse
 from globals import *
+import os
 
 def ParseArgs():
 	logger.debug("Parsing arguments...")
@@ -31,4 +32,12 @@ def CheckArgs(args):
 			raise ValueError(f"Parameter {name} must be a positive integer, got {val}.")
 
 	# Check if files exist
-	# TODO: Implement
+	if not os.path.exists(args.I):
+		message = f"Input file {args.I} does not exist."
+		logger.error(f"Input file {args.I} does not exist.")
+		raise ValueError(message)
+
+	if not os.path.exists(args.O):
+		message = f"Output file {args.O} does not exist."
+		logger.error(message)
+		raise ValueError(message)
