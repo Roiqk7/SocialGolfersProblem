@@ -32,8 +32,6 @@ X_{r,p,g} =
 \end{cases}
 $$
 
-Total count of $X_{r,p,g}$ variables is $N \cdot G \cdot R$
-
 2. Pair of players $\{p_1, p_2\}$ meet in group $g$ during round $r$:
 
 Boolean variable $Z_{r,\{p_1,p_2\},g}$, defined as:
@@ -45,8 +43,6 @@ Z_{r,\{p_1,p_2\},g} =
 0, & \text{otherwise.}
 \end{cases}
 $$
-
-Total count of $Z_{r,\{p_1,p_2\},g}$ variables is $R \cdot \binom{N}{2} \cdot G$
 
 This gives us the total number of all variables:
 
@@ -63,8 +59,6 @@ $$
 \left( \bigwedge_{1 \le g_1 < g_2 \le G} (\neg X_{r, p, g_1} \lor \neg X_{r, p, g_2}) \right)
 $$
 
-This means we have a total of $R \cdot N + R \cdot N \cdot \binom{G}{2}$ clauses.
-
 2. Each group has exactly $S$ golfers:
 
 $$
@@ -73,8 +67,6 @@ $$
   \bigvee_{p\in U} X_{r,p,g}
 \right)
 $$
-
-The total of clauses here is $R \cdot G \cdot \binom{N}{S+1}$
 
 *Note:* Here we actually just ensure that each group has at most $S$ players, which in combination with constraint 1 is enough.
 
@@ -86,22 +78,6 @@ $$
   \bigvee_{r\in U} \neg Y_{r,\{p_1,p_2\}}
 \right)
 $$
-
-The total of clauses here is $\binom{N}{2} \cdot \Big[ R(4G+1) + \binom{R}{T+1} \Big]$
-
-Which gives us the total number of all clauses:
-
-$$
-R \cdot N + R \cdot N \cdot \binom{G}{2} + R \cdot G \cdot \binom{N}{S+1} + \binom{N}{2} \cdot \Big[ R(4G+1) + \binom{R}{T+1} \Big]
-$$
-
-Here is an orientation table:
-
-| Scenario | $N$ | $R$ | $G$ | $T$ | Clauses without $Y,Z$                                       | Clauses with $Y,Z$                                             |
-| :---: | :---: | :---: | :---: | :---: |-------------------------------------------------------------|----------------------------------------------------------------|
-| Small | 16 | 5 | 4 | 1 | $\binom{5}{2}\cdot \binom{16}{2}\cdot 4^2 = 19.200$         | $\binom{16}{2}\cdot[5(4\cdot4+1)+\binom{5}{2}] = 11.400$       |
-| Medium | 32 | 10 | 8 | 1 | $\binom{10}{2}\cdot \binom{32}{2}\cdot 8^2 = 1.428.480$     | $\binom{32}{2}\cdot[10(4\cdot8+1)+\binom{10}{2}] = 186.000$    |
-| Large | 64 | 20 | 16 | 2 | $\binom{20}{3}\cdot \binom{64}{2}\cdot 16^3 = 9.413.591.040$ | $\binom{64}{2}\cdot[20(4\cdot16+1)+\binom{20}{3}] = 4.919.040$ |
 
 ## State of application
 
