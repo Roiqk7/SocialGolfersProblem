@@ -18,5 +18,5 @@ except ModuleNotFoundError:
 	logging.basicConfig(
 		level=logging.DEBUG,
 		format="[%(levelname)s][%(name)s][%(asctime)s]: %(message)s",
-		datefmt="%H:%M:%S.%f",
+		datefmt="%H:%M:%S",
 	)
