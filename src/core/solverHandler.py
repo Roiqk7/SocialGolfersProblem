@@ -16,7 +16,7 @@ class SolverHandler:
 		if verbosity in [0, 1, 2]:
 			self.Verbosity = verbosity
 		else:
-			logger.warn(f"Invalid verbosity level: {verbosity}")
+			logger.warn(f"Invalid verbosity level: {verbosity}. Defaulting to 0.")
 			self.Verbosity = 0
 
 	def CallSolver(self):
