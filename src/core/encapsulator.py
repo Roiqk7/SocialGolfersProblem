@@ -62,7 +62,7 @@ class Encapsulator:
 						self.Vars.append([id, r, p, g])
 		except Exception as e:
 			logger.error(e)
-			raise RuntimeError(f"Could not load variables: {e}")
+			raise IOError(f"Could not load variables: {e}")
 
 	def _LoadModel(self):
 		try:
@@ -81,7 +81,7 @@ class Encapsulator:
 								break
 		except Exception as e:
 			logger.error(e)
-			raise RuntimeError(f"Could not load model: {e}")
+			raise IOError(f"Could not load model: {e}")
 
 	def _FinilizeResult(self):
 		try:
@@ -115,4 +115,4 @@ class Encapsulator:
 					f.write(str(p))
 		except Exception as e:
 			logger.error(e)
-			raise RuntimeError(f"Could not write result: {e}")
+			raise IOError(f"Could not write result: {e}")

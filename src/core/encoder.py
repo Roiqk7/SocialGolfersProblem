@@ -50,7 +50,7 @@ class ProblemInstance:
 					oF.write(tmpF.read())
 		except Exception as e:
 			logger.error(e)
-			raise RuntimeError(f"Could not fill the CNF output file: {e}")
+			raise IOError(f"Could not fill the CNF output file: {e}")
 
 	def _WriteVarID(self):
 		logger.info(f"Writing variables to file: {self._VarIDMapFilePath}")

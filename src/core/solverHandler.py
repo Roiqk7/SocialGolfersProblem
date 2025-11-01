@@ -45,4 +45,4 @@ class SolverHandler:
 				f.write(data)
 		except Exception as e:
 			logger.error(e)
-			raise RuntimeError(f"Could not write result: {e}")
+			raise IOError(f"Could not write result: {e}")
