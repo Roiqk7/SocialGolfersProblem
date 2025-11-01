@@ -13,13 +13,13 @@ logger = logging.getLogger("SGP")
 try:
 	import coloredlogs
 	coloredlogs.install(
-		level="DEBUG",
+		level=logging.INFO,
 		fmt="[%(levelname)s][%(name)s][%(asctime)s]: %(message)s",
 		datefmt="%H:%M:%S.%f",
 		logger=logger)
 except ModuleNotFoundError:
 	logging.basicConfig(
-		level=logging.DEBUG,
+		level=logging.INFO,
 		format="[%(levelname)s][%(name)s][%(asctime)s]: %(message)s",
 		datefmt="%H:%M:%S",
 	)
