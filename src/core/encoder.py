@@ -38,17 +38,17 @@ class ProblemInstance:
 		self._EncodePairingConstraint()
 		logger.debug("Finished encoding clauses.")
 
-	def _GetXVarID(self, r, p, g) -> int:
+	def _GetXVarID(self, r: int, p: int, g: int) -> int:
 		return r * (self.N * self.G) + p * self.G + g
 
-	def _GetPairIndex(self, p1, p2) -> int:
+	def _GetPairIndex(self, p1: int, p2: int) -> int:
 		# We ensure p1 < p2
 		if p1 > p2:
 			p1, p2 = p2, p1
 
 		return math.comb(p2, 2) + p1
 
-	def _GetZVarID(self, r, p1, p2, g) -> int:
+	def _GetZVarID(self, r: int, p1: int, p2: int, g: int) -> int:
 		return (self._GetNumberOfXVariables()
 			+ r * (math.comb(self.N, 2) * self.G) + self._GetPairIndex(p1, p2) + g)
 
