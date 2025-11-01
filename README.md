@@ -61,17 +61,13 @@ $$
 
 Without variables $Y$ and $Z$ we would have to generate $\binom{R}{T+1} \cdot \binom{N}{2} \cdot G^{T+1}$ clauses for constraint 3.
 
-With these variables all we need is: $\binom{N}{2} \cdot \Big[ R(4G+1) + \binom{R}{T+1} \Big]^*$.
+With these variables all we need is: $\binom{N}{2} \cdot \Big[ R(4G+1) + \binom{R}{T+1} \Big]^*$
 
-$$
-\begin{array}{c|c|c|c|c|c}
-\text{Scenario} & N & R & G & T & \text{Clauses without $Y,Z$} & \text{Clauses with $Y,Z$} \\
-\hline
-\text{Small} & 16 & 5 & 4 & 1 & 	\binom{5}{2}\cdot \binom{16}{2}\cdot 4^2 = 19.200 & 		\binom{16}{2}\cdot[5(4\cdot4+1)+\binom{5}{2}] = 11.400 \\
-\text{Medium} & 32 & 10 & 8 & 1 & 	\binom{10}{2}\cdot \binom{32}{2}\cdot 8^2 = 1.428.480 & 	\binom{32}{2}\cdot[10(4\cdot8+1)+\binom{10}{2}] = 186.000 \\
-\text{Large} & 64 & 20 & 16 & 2 & 	\binom{20}{3}\cdot \binom{64}{2}\cdot 16^3 = 9.413.591.040 & 	\binom{64}{2}\cdot[20(4\cdot16+1)+\binom{20}{3}] = 4.919.040 \\
-\end{array}
-$$
+| Scenario | $N$ | $R$ | $G$ | $T$ | Clauses without $Y,Z$ | Clauses with $Y,Z$ |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Small | 16 | 5 | 4 | 1 | $\binom{5}{2}\cdot \binom{16}{2}\cdot 4^2 = 19.200$ | $\binom{16}{2}\cdot[5(4\cdot4+1)+\binom{5}{2}] = 11.400$ |
+| Medium | 32 | 10 | 8 | 1 | $\binom{10}{2}\cdot \binom{32}{2}\cdot 8^2 = 1.428.480$ | $\binom{32}{2}\cdot[10(4\cdot8+1)+\binom{10}{2}] = 186.000$ |
+| Large | 64 | 20 | 16 | 2 | $\binom{20}{3}\cdot \binom{64}{2}\cdot 16^3 = 9.413.591.040$ | $\binom{64}{2}\cdot[20(4\cdot16+1)+\binom{20}{3}] = 4.919.040$ |
 
 \* *The calculculation is as follows: We need $\binom{N}{2}\cdot R \cdot (G+1)$ clauses to define $Y$ and $\binom{N}{2}\cdot R \cdot 3G$ clauses to define $Z$ and we also need $\binom{N}{2}\cdot\binom{R}{T+1}$ clauses for at most $T$ constraint.*
 
@@ -114,15 +110,11 @@ $$
 
 Which gives us the total number of all clauses: $R \cdot N + R \cdot N \cdot \binom{G}{2} + R \cdot G \cdot \binom{N}{S-1} + \binom{N}{2} \cdot \Big[ R(4G+1) + \binom{R}{T+1} \Big]$. Here is an orientation table:
 
-$$
-\begin{array}{c|c|c|c|c}
-\text{Scenario} & N & R & G & T & \text{#Clauses} \\
-\hline
-\text{Small} & 16 & 5 & 4 & 1 & 	80 + 480 + 11.200 + 11.400 = 23.160 \\
-\text{Medium} & 32 & 10 & 8 & 1 & 	320 + 8.960 + 396.800 + 186.000 = 592.080	 \\
-\text{Large} & 64 & 20 & 16 & 2 & 	1.280 + 153.600 + 13.332.480 + 4.919.040 = 18.406.400 \\
-\end{array}
-$$
+| Scenario | $N$ | $R$ | $G$ | $T$ | #Clauses |
+| :---: | :---: | :---: | :---: | :---: | :---: |
+| Small | 16 | 5 | 4 | 1 | $80 + 480 + 11.200 + 11.400 = 23.160$ |
+| Medium | 32 | 10 | 8 | 1 | $320 + 8.960 + 396.800 + 186.000 = 592.080$ |
+| Large | 64 | 20 | 16 | 2 | $1.280 + 153.600 + 13.332.480 + 4.919.040 = 18.406.400$ |
 
 ## State of application
 
