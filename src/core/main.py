@@ -13,6 +13,11 @@ def Main():
 	solver = SolverHandler(problemInstance)
 	Encapsulator(solver.RawResult, N, R, G, S)
 	logger.info(f"Finished in {(clock() - startTime):.3f} seconds")
+	# Unsolvable - return 1 exit code
+	if solver.RawResult.returncode == 20:
+		return 1
+	# Solvable - return 0 exit code
+	return 0
 
 if __name__ == "__main__":
 	Main()
