@@ -23,53 +23,53 @@ class Encapsulator:
 		# in our case that is the trivial case
 		if self._RawResult.returncode == 20:
 			logger.info(f"Result: UNSAT; Writing into output file: {self.OutputFile}")
-			with open(self._RawResult, "w") as f:
+			with open(self.OutputFile, "w") as f:
 				f.write("UNSAT")
-				return
-		# Problem is solvable, so we need to parse it
-		logger.debug(f"Problem is solvable, constructing a model...")
+		else:
+			# Problem is solvable, so we need to parse it
+			logger.debug(f"Problem is solvable, constructing a model...")
 
-		# 1. We load the variables self.Vars[i] = [id, r, p, g]
-		self._LoadVars()
+			# 1. We load the variables self.Vars[i] = [id, r, p, g]
+			self._LoadVars()
 
-		# 2. Now we load the model and set self.Vars[i] = [bool, r, p, g]
-		self._LoadModel()
+			# 2. Now we load the model and set self.Vars[i] = [bool, r, p, g]
+			self._LoadModel()
 
-		# 3. We filter out options with [False, *, *, *]
-		self.Vars = [x for x in self.Vars if x[0]]
+			# 3. We filter out options with [False, *, *, *]
+			self.Vars = [x for x in self.Vars if x[0]]
 
-		# 4. We sort self.Vars by r and secondarily by g
-		self.Vars = sorted(self.Vars, key=lambda var: (var[1], var[3]))
+			# 4. We sort self.Vars by r and secondarily by g
+			self.Vars = sorted(self.Vars, key=lambda var: (var[1], var[3]))
 
-		# 5. Now we construct the final output
-		logger.info(f"Writing model into file: {self.OutputFile}")
-		with open(self.OutputFile, "w") as f:
-			currentRound = None
-			currentGroup = None
-			firstInRound = True
-			firstInGroup = True
+			# 5. Now we construct the final output
+			logger.info(f"Writing model into file: {self.OutputFile}")
+			with open(self.OutputFile, "w") as f:
+				currentRound = None
+				currentGroup = None
+				firstInRound = True
+				firstInGroup = True
 
-			for b, r, p, g in self.Vars:
-				# If we move to a new round
-				if r != currentRound:
-					if not firstInRound:
-						f.write("\n")
-					currentRound = r
-					currentGroup = None
-					firstInRound = False
-					firstInGroup = True
+				for b, r, p, g in self.Vars:
+					# If we move to a new round
+					if r != currentRound:
+						if not firstInRound:
+							f.write("\n")
+						currentRound = r
+						currentGroup = None
+						firstInRound = False
+						firstInGroup = True
 
-				# If we move to a new group
-				if g != currentGroup:
-					if not firstInGroup:
-						f.write(";")
-					currentGroup = g
-					firstInGroup = False
-				else:
-					f.write(",")
+					# If we move to a new group
+					if g != currentGroup:
+						if not firstInGroup:
+							f.write(";")
+						currentGroup = g
+						firstInGroup = False
+					else:
+						f.write(",")
 
-				# Write player
-				f.write(str(p))
+					# Write player
+					f.write(str(p))
 		logger.debug(f"Finished result processing in {(clock() - startTime):.3f}.")
 
 	def _LoadVars(self):
