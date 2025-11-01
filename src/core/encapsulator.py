@@ -28,18 +28,17 @@ class Encapsulator:
 				return
 		# Problem is solvable, so we need to parse it
 		logger.debug(f"Problem is solvable, constructing a model...")
+
+		# 1. We load the variables self.Vars[i] = [id, r, p, g]
 		self._LoadVars()
 
-		# 1. We load the model
+		# 2. Now we load the model and set self.Vars[i] = [bool, r, p, g]
 		self._LoadModel()
 
-		# 2. Now the self.Vars contains everything we need
-		# self.Vars[i] = (bool, r, p, g)
-		# We sort it a but smartly:
-		# Primarily by round and secondly by group
+		# 3. We sort self.Vars by r and secondarily by g
 		self.Vars = sorted(self.Vars, key=lambda var: (var[1], var[3]))
 
-		# 3. Now we write the result
+		# 4. Now we construct the final output
 		logger.info(f"Writing model into file: {self.OutputFile}")
 		with open(self.OutputFile, "w") as f:
 			currentRound = 0
