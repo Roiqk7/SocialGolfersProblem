@@ -69,7 +69,7 @@ With these variables all we need is: $\binom{N}{2} \cdot \Big[ R(4G+1) + \binom{
 | Medium | 32 | 10 | 8 | 1 | $320 + 8.960 + 396.800 + 186.000 = 592.080$            |
 | Large | 64 | 20 | 16 | 2 | $1.280 + 153.600 + 13.332.480 + 4.919.040 = 18.406.400$ |
 
-\* *The calculculation is as follows: We need $\binom{N}{2}\cdot R \cdot (G+1)$ clauses to define $Y$ and $\binom{N}{2}\cdot R \cdot 3G$ clauses to define $Z$ and we also need $\binom{N}{2}\cdot\binom{R}{T+1}$ clauses for at most $T$ constraint.*
+\* The calculation is as follows: We need $\binom{N}{2}\cdot R \cdot (G+1)$ clauses to define $Y$ and $\binom{N}{2}\cdot R \cdot 3G$ clauses to define $Z$ and we also need $\binom{N}{2}\cdot\binom{R}{T+1}$ clauses for at most $T$ constraint.
 
 </details>
 
