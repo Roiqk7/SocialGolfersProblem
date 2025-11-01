@@ -35,20 +35,41 @@ class Encapsulator:
 		# 2. Now we load the model and set self.Vars[i] = [bool, r, p, g]
 		self._LoadModel()
 
-		# 3. We sort self.Vars by r and secondarily by g
+		# 3. We filter out options with [False, *, *, *]
+		self.Vars = [x for x in self.Vars if x[0]]
+
+		# 4. We sort self.Vars by r and secondarily by g
 		self.Vars = sorted(self.Vars, key=lambda var: (var[1], var[3]))
 
-		# 4. Now we construct the final output
+		# 5. Now we construct the final output
 		logger.info(f"Writing model into file: {self.OutputFile}")
 		with open(self.OutputFile, "w") as f:
-			currentRound = 0
-			for var in self.Vars:
-				b, r, p, g = var[0], var[1], var[2], var[3]
+			currentRound = None
+			currentGroup = None
+			firstInRound = True
+			firstInGroup = True
+
+			for b, r, p, g in self.Vars:
+				# If we move to a new round
 				if r != currentRound:
-					f.write("\n")
-					currentRound += 1
-				if b:
-					f.write(f"{p} ")
+					if not firstInRound:
+						f.write("\n")
+					currentRound = r
+					currentGroup = None
+					firstInRound = False
+					firstInGroup = True
+
+				# If we move to a new group
+				if g != currentGroup:
+					if not firstInGroup:
+						f.write(";")
+					currentGroup = g
+					firstInGroup = False
+				else:
+					f.write(",")
+
+				# Write player
+				f.write(str(p))
 		logger.debug(f"Finished result processing in {(clock() - startTime):.3f}.")
 
 	def _LoadVars(self):
@@ -65,12 +86,12 @@ class Encapsulator:
 			VarsIndex = 0
 			if line.startswith("v"):
 				vars = line.split(" ")
-				vars.remove("v")
+				vars.pop(0)
 				for v in vars:
 					v = int(v)
 					if abs(v) == self.Vars[VarsIndex][0]:
 						# We rewrite the id with the bool value
-						self.Vars[VarsIndex][0] = -1 if v < 0 else 1
+						self.Vars[VarsIndex][0] = False if v < 0 else True
 						VarsIndex += 1
 						if VarsIndex >= len(self.Vars):
 							break
