@@ -1,4 +1,5 @@
 import argparse
+import logging
 from globals import *
 import os
 
@@ -13,8 +14,10 @@ def ParseArgs():
 		parser.add_argument("--T", type=int, default=1, help="Max times a pair can meet (default: 1)")
 		parser.add_argument("--I", type=str, default=DEFAULT_CNF_FILE_PATH, help=f"Input file in DIMACS CNF format (default: {DEFAULT_CNF_FILE_PATH}")
 		parser.add_argument("--O", type=str, default=DEFAULT_SOLVER_OUTPUT_FILE_PATH, help=f"Output file of the SAT solver (default: {DEFAULT_SOLVER_OUTPUT_FILE_PATH}")
+		parser.add_argument("--V", type=int, default=1, choices=[0, 1, 2], help="Verbosity level for logging (default: 0)")
 		args = parser.parse_args()
 		CheckArgs(args)
+		SetVervosity(args.V)
 		logger.info(f"Args: {args}")
 		logger.debug("Finished parsing arguments.")
 		return args
@@ -35,6 +38,11 @@ def CheckArgs(args):
 		if val <= 0:
 			raise ValueError(f"Parameter {name} must be a positive integer, got {val}.")
 
+	# Verbosity check
+	if args.V not in [0, 1, 2]:
+		logger.warn(f"Verbosity level {args.V} is not supported. Resetting to default: 0.")
+		args.V = 0
+
 	# Check if files exist
 	if not os.path.exists(args.I):
 		message = f"Input file {args.I} does not exist."
@@ -45,3 +53,15 @@ def CheckArgs(args):
 		message = f"Output file {args.O} does not exist."
 		logger.error(message)
 		raise ValueError(message)
+
+def SetVervosity(V: int):
+	if V == 0:
+		logLevel = logging.WARNING
+	elif V == 1:
+		logLevel = logging.INFO
+	elif V == 2:
+		logLevel = logging.DEBUG
+	else:
+		logLevel = logging.INFO
+	logger.setLevel(logLevel)
+	logger.debug(f"Verbosity level is set to {V} ({logging.getLevelName(logLevel)}).")
