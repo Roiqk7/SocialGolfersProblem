@@ -106,7 +106,7 @@ $$
 \right)
 $$
 
-*Note:* The total of clauses here is $\binom{N}{2} \cdot \Big[ R(4G+1) + \binom{R}{T+1} \Big]$.
+*Note:* The total of clauses here is $\binom{N}{2} \cdot \Big[ R(4G+1) + \binom{R}{T+1} \Big]$
 
 Which gives us the total number of all clauses:
 
@@ -124,10 +124,6 @@ Here is an orientation table:
 
 ## State of application
 
-* Other
-  * Fix github latex rendering
-    * The tables are broken
-    * The ^* is also weird.
 * Core
   * Improve core functionality
     * Add correct clause generation
