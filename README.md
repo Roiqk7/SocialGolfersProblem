@@ -32,6 +32,8 @@ X_{r,p,g} =
 \end{cases}
 $$
 
+Total count of $X_{r,p,g}$ variables is $N \cdot G \cdot R$
+
 2. Pair of players $\{p_1, p_2\}$ meet in any group during round $r$:
 
 Boolean variable $Y_{r,\{p_1,p_2\}}$, defined as:
@@ -44,6 +46,8 @@ Y_{r,\{p_1,p_2\}} =
 \end{cases}
 $$
 
+Total count of $Y_{r,\{p_1,p_2\}}$ variables is $R \cdot \binom{N}{2}$
+
 3. Pair of players $\{p_1, p_2\}$ meet in group $g$ during round $r$:
 
 Boolean variable $Z_{r,\{p_1,p_2\},g}$, defined as:
@@ -54,6 +58,14 @@ Z_{r,\{p_1,p_2\},g} =
 1, & \text{if both players } p_1 \text{ and } p_2 \text{ are in group } g \text{ during round } r, \\
 0, & \text{otherwise.}
 \end{cases}
+$$
+
+Total count of $Z_{r,\{p_1,p_2\},g}$ variables is $R \cdot \binom{N}{2} \cdot G$
+
+This gives us the total number of all variables:
+
+$$
+R \cdot \Big[N \cdot G + \binom{N}{2} \cdot (1 + G) \Big]
 $$
 
 <details>
@@ -82,7 +94,7 @@ $$
 \left( \bigwedge_{1 \le g_1 < g_2 \le G} (\neg X_{r, p, g_1} \lor \neg X_{r, p, g_2}) \right)
 $$
 
-*Note:* This means we have a total of $R \cdot N + R \cdot N \cdot \binom{G}{2}$ clauses.
+This means we have a total of $R \cdot N + R \cdot N \cdot \binom{G}{2}$ clauses.
 
 2. Each group has exactly $S$ golfers:
 
@@ -93,9 +105,9 @@ $$
 \right)
 $$
 
-*Note:* Here we actually just ensure that each group has at least $S$ players, which in combination with constraint 1 is enough.
+The total of clauses here is $R \cdot G \cdot \binom{N}{S-1}$
 
-*Note2:* The total of clauses here is $R \cdot G \cdot \binom{N}{S-1}$
+*Note:* Here we actually just ensure that each group has at least $S$ players, which in combination with constraint 1 is enough.
 
 3. No pair of players plays together more than $T$ times:
 
@@ -106,7 +118,7 @@ $$
 \right)
 $$
 
-*Note:* The total of clauses here is $\binom{N}{2} \cdot \Big[ R(4G+1) + \binom{R}{T+1} \Big]$
+The total of clauses here is $\binom{N}{2} \cdot \Big[ R(4G+1) + \binom{R}{T+1} \Big]$
 
 Which gives us the total number of all clauses:
 
