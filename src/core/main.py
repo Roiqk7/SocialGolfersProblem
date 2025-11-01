@@ -14,9 +14,6 @@ def Main():
 		solver = SolverHandler(problemInstance)
 		Encapsulator(solver.RawResult, N, R, G, S)
 		logger.info(f"Finished in {(clock() - startTime):.3f} seconds")
-		# Unsolvable - return 1 exit code
-		if solver.RawResult.returncode == 20:
-			return 1
 		# Unsolvable - return 1 exit code else 0 if solvable
 		return 1 if solver.RawResult.returncode == 20 else 0
 	except Exception as e:
