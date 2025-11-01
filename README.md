@@ -93,9 +93,9 @@ $$
 \right)
 $$
 
-*Note: Here we actually just ensure that each group has at least $S$ players, which in combination with constraint 1 is enough.*
+*Note:* Here we actually just ensure that each group has at least $S$ players, which in combination with constraint 1 is enough.
 
-*Note$^2$: The total of clauses here is $R \cdot G \cdot \binom{N}{S-1}$*
+*Note2:* The total of clauses here is $R \cdot G \cdot \binom{N}{S-1}$
 
 3. No pair of players plays together more than $T$ times:
 
@@ -106,7 +106,7 @@ $$
 \right)
 $$
 
-*Note: The total of clauses here is $\binom{N}{2} \cdot \Big[ R(4G+1) + \binom{R}{T+1} \Big]$.*
+*Note:* The total of clauses here is $\binom{N}{2} \cdot \Big[ R(4G+1) + \binom{R}{T+1} \Big]$.
 
 Which gives us the total number of all clauses: $R \cdot N + R \cdot N \cdot \binom{G}{2} + R \cdot G \cdot \binom{N}{S-1} + \binom{N}{2} \cdot \Big[ R(4G+1) + \binom{R}{T+1} \Big]$. Here is an orientation table:
 
