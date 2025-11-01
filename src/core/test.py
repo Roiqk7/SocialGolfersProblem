@@ -2,7 +2,6 @@ from collections import defaultdict
 from main import Main
 from globals import *
 from pathlib import Path
-from typing import Set
 from unittest.mock import patch
 import signal
 import unittest
@@ -85,7 +84,7 @@ class SolutionChecker():
                         raise IOError(f"Could not load solution: {e}")
 
 
-class SocialGolfersProblem(unittest.TestCase):
+class SGPTests(unittest.TestCase):
         def setUp(self):
                 self.SolutionChecker = SolutionChecker()
                 self.V = 0
