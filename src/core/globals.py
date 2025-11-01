@@ -7,6 +7,7 @@ DEFAULT_SOLVER_OUTPUT_FILE_PATH = Path("data", "out", "solver.txt").as_posix()
 DEFAULT_SOLVER_EXECUTABLE_PATH = Path("glucose", "simp", "glucose").as_posix()
 VAR_ID_FILE_PATH = Path("data", "in", "varID.txt").as_posix()
 PROCESSED_RESULT_PATH = Path("data", "out", "result.txt").as_posix()
+TEST_FILE_PATH = Path("src", "core", "test.py").as_posix()
 
 logger = logging.getLogger("SGP")
 

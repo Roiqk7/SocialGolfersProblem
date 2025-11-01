@@ -1,6 +1,6 @@
+from globals import *
 import argparse
 import logging
-from globals import *
 import os
 
 def ParseArgs():
@@ -15,6 +15,7 @@ def ParseArgs():
 		parser.add_argument("--I", type=str, default=DEFAULT_CNF_FILE_PATH, help=f"Input file in DIMACS CNF format (default: {DEFAULT_CNF_FILE_PATH}")
 		parser.add_argument("--O", type=str, default=DEFAULT_SOLVER_OUTPUT_FILE_PATH, help=f"Output file of the SAT solver (default: {DEFAULT_SOLVER_OUTPUT_FILE_PATH}")
 		parser.add_argument("--V", type=int, default=1, choices=[0, 1, 2], help="Verbosity level for logging (default: 0)")
+		parser.add_argument("--test", action="store_true", default=False, help="If present, runs the test suite.")
 		args = parser.parse_args()
 		CheckArgs(args)
 		SetVervosity(args.V)

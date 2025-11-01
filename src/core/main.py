@@ -1,14 +1,18 @@
 from encapsulator import Encapsulator
 from encoder import ProblemInstance
-from globals import logger
+from globals import *
 from parser import ParseArgs
+import sys
 from solverHandler import SolverHandler
 from time import perf_counter as clock
+import unittest
 
 def Main():
 	try:
 		startTime = clock()
 		args = ParseArgs()
+		if args.test:
+			pass
 		N, G, S, R, T = args.N, args.G, args.S, args.R, args.T
 		problemInstance = ProblemInstance(N, G, S, R, T)
 		solver = SolverHandler(problemInstance)
