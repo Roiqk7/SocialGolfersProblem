@@ -82,9 +82,6 @@ $$
 ## State of application
 
 * Core
-  * Improve core functionality
-    * Check individual clause encoders for their clause count
-    * Also check variables etc.
   * Add result interpreter
   * Add basic tests + instances
   * Code refactoring
