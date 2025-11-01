@@ -82,9 +82,9 @@ $$
 ## State of application
 
 * Core
-  * Add result interpreter
-  * Add basic tests + instances
   * Code refactoring
+    * More comments + documentation
+    * Better exception handling (no atm)
 * Test
   * Write tests for the Core
 * Frontend
