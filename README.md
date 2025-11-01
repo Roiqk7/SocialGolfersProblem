@@ -107,8 +107,8 @@ Here is an orientation table:
 
 * Core
   * Improve core functionality
-    * Add correct clause generation
-    * Add correct clause counter
+    * Check individual clause encoders for their clause count
+    * Also check variables etc.
   * Add result interpreter
   * Add basic tests + instances
   * Code refactoring
