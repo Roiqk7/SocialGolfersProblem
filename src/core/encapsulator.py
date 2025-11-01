@@ -30,7 +30,7 @@ class Encapsulator:
 					f.write("UNSAT")
 			else:
 				# Problem is solvable, so we need to parse it
-				logger.debug(f"Problem is solvable, constructing a model...")
+				logger.info(f"Problem is solvable, constructing a model...")
 
 				# 1. We load the variables self.Vars[i] = [id, r, p, g]
 				self._LoadVars()
