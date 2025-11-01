@@ -1,6 +1,6 @@
 from encoder import ProblemInstance
 from globals import *
-import subprocess
+from subprocess import run, PIPE
 
 class SolverHandler:
 	def __init__(self, pi: ProblemInstance, verbosity: int = 0):
@@ -27,7 +27,7 @@ class SolverHandler:
 				"-verb=" + str(self.Verbosity)
 			]
 			logger.info("Executing SAT solver command: %s", " ".join(command))
-			return subprocess.run(command, stdin=f, stdout=subprocess.PIPE)
+			return run(command, stdin=f, stdout=PIPE)
 
 	def WriteResult(self, result):
 		logger.info(f"Writing SAT solver result to {self.OutputFile}...")

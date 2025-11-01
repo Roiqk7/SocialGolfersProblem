@@ -1,4 +1,5 @@
 from globals import *
+from time import perf_counter as clock
 
 class Encapsulator:
 	def __init__(self, rawResult, N: int, R: int, G: int, S: int):
@@ -16,6 +17,8 @@ class Encapsulator:
 		self.ProcessResult()
 
 	def ProcessResult(self):
+		startTime = clock()
+		logger.debug("Processing result...")
 		# 20 is Glucose code for UNSAT
 		# in our case that is the trivial case
 		if self._RawResult.returncode == 20:
@@ -47,10 +50,11 @@ class Encapsulator:
 					currentRound += 1
 				if b:
 					f.write(f"{p} ")
-		logger.debug(f"Finished constructing model.")
+		logger.debug(f"Finished result processing in {(clock() - startTime):.3f}.")
 
 	def _LoadVars(self):
 		with open(self.VarIDFile, "r") as f:
+			logger.info(f"Loading variables from file: {self.VarIDFile}")
 			for line in f:
 				line = line.strip()
 				if line:

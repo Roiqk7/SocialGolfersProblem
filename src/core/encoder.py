@@ -1,17 +1,18 @@
 from globals import *
-import itertools
-import math
-import os
 from pathlib import Path
+from time import perf_counter as clock
+import itertools
+import os
 
 class ProblemInstance:
 	def __init__(self, N: int, G: int, S: int, R: int, T: int):
+		startTime = clock()
 		logger.debug("Began creating the problem instance...")
 		self._Init(N, G, S, R, T)
 		self._EncodeClauses()
 		self._FillOutputFile()
 		self._WriteVarID()
-		logger.debug("Finished creating the problem instance.")
+		logger.debug(f"Finished creating the problem instance in {(clock() - startTime):.3f}.")
 
 	def _Init(self, N: int, G: int, S: int, R: int, T: int, InputFile: Path = None):
 		self.N = N
@@ -44,7 +45,7 @@ class ProblemInstance:
 				oF.write(tmpF.read())
 
 	def _WriteVarID(self):
-		logger.info(f"Writing variable ID to file: {self._VarIDMapFilePath}")
+		logger.info(f"Writing variables to file: {self._VarIDMapFilePath}")
 		# We filter Xes and sort them by id for easier processing later
 		xVarItems = [(k, v) for k, v in self._VarIDMap.items() if k[0] == 'X']
 		sortedXVarItems = sorted(xVarItems, key=lambda x: x[1])
@@ -86,6 +87,8 @@ class ProblemInstance:
 			f.write(self._GetClause(arr))
 
 	def _EncodeGroupPartitionConstraint(self):
+		startTime = clock()
+		clauseCount = self._ClauseCount
 		logger.debug("Encoding group partition constraint...")
 		for r in range(self.R):
 			for p in range(self.N):
@@ -94,17 +97,21 @@ class ProblemInstance:
 				self._WriteClause(Xvars)
 				# At most one - use helper
 				self._EncodeAtMostKConstraint(Xvars, 1)
-		logger.debug("Finished encoding group partition constraint.")
+		logger.debug(f"Finished encoding group partition constraint in {(clock() - startTime):.3f} using {self._ClauseCount - clauseCount} clauses.")
 
 	def _EncodeGroupSizeConstraint(self):
+		startTime = clock()
+		clauseCount = self._ClauseCount
 		logger.debug("Encoding group size constraint...")
 		for r in range(self.R):
 			for g in range(self.G):
 				Xvars = [self._GetVarID(('X', r, p, g)) for p in range(self.N)]
 				self._EncodeAtMostKConstraint(Xvars, self.S)
-		logger.debug("Finished encoding group size constraint.")
+		logger.debug(f"Finished encoding group size constraint in {(clock() - startTime):.3f} using {self._ClauseCount - clauseCount} clauses.")
 
 	def _EncodeDefinitionOfZ(self):
+		startTime = clock()
+		clauseCount = self._ClauseCount
 		logger.debug("Encoding definition of Z...")
 		for r in range(self.R):
 			for g in range(self.G):
@@ -120,9 +127,11 @@ class ProblemInstance:
 						self._WriteClause([-Z, Xp2])
 						# 3. (Xp1 AND Xp2 -> Z)
 						self._WriteClause([-Xp1, -Xp2, Z])
-		logger.debug("Finished encoding definition of Z.")
+		logger.debug(f"Finished encoding definition of Z in {(clock() - startTime):.3f} using {self._ClauseCount - clauseCount} clauses.")
 
 	def _EncodePairingConstraint(self):
+		startTime = clock()
+		clauseCount = self._ClauseCount
 		logger.debug("Encoding pairing constraint...")
 		for p1 in range(self.N):
 			for p2 in range(p1 + 1, self.N):
@@ -131,7 +140,7 @@ class ProblemInstance:
 					for g in range(self.G):
 						ZvarsForPair.append(self._GetVarID(('Z', r, p1, p2, g)))
 				self._EncodeAtMostKConstraint(ZvarsForPair, self.T)
-		logger.debug("Finished encoding pairing constraint.")
+		logger.debug(f"Finished encoding pairing constraint in {(clock() - startTime):.3f} using {self._ClauseCount - clauseCount} clauses.")
 
 	def _EncodeAtMostKConstraint(self, variables: list[int], K: int):
 		# Trivial case
