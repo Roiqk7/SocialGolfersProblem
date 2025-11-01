@@ -82,7 +82,7 @@ $$
 \left( \bigwedge_{1 \le g_1 < g_2 \le G} (\neg X_{r, p, g_1} \lor \neg X_{r, p, g_2}) \right)
 $$
 
-*Note: This means we have a total of $R \cdot N + R \cdot N \cdot \binom{G}{2}$ clauses.*
+*Note:* This means we have a total of $R \cdot N + R \cdot N \cdot \binom{G}{2}$ clauses.
 
 2. Each group has exactly $S$ golfers:
 
