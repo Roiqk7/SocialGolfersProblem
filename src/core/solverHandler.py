@@ -6,8 +6,8 @@ class SolverHandler:
 	def __init__(self, pi: ProblemInstance, verbosity: int = 0):
 		logger.debug("Handing the problem instance to the solver...")
 		self._Init(pi, verbosity)
-		rawResult = self.CallSolver()
-		self.WriteResult(rawResult)
+		self.RawResult = self.CallSolver()
+		self.WriteResult(self.RawResult)
 		logger.debug("Finished handling the problem instance.")
 
 	def _Init(self, pi: ProblemInstance, verbosity: int):

@@ -10,6 +10,7 @@ class ProblemInstance:
 		self._Init(N, G, S, R, T)
 		self._EncodeClauses()
 		self._FillOutputFile()
+		self._WriteVarID()
 		logger.debug("Finished creating the problem instance.")
 
 	def _Init(self, N: int, G: int, S: int, R: int, T: int, InputFile: Path = None):
@@ -22,9 +23,11 @@ class ProblemInstance:
 		self._NextID = 1
 		self._ClauseCount = 0
 		self._TmpOutputFile = DEFAULT_TMP_CNF_FILE_PATH
-		# We clean the file before each use
 		if os.path.exists(self._TmpOutputFile):
 			os.remove(self._TmpOutputFile)
+		self._VarIDMapFilePath = VAR_ID_FILE_PATH
+		if os.path.exists(self._VarIDMapFilePath):
+			os.remove(self._VarIDMapFilePath)
 		if InputFile is None:
 			self.OutputFile = DEFAULT_CNF_FILE_PATH
 		else:
@@ -39,6 +42,17 @@ class ProblemInstance:
 			oF.write(f"p cnf {numVars} {numClauses}\n")
 			with open(self._TmpOutputFile, "r") as tmpF:
 				oF.write(tmpF.read())
+
+	def _WriteVarID(self):
+		logger.info(f"Writing variable ID to file: {self._VarIDMapFilePath}")
+		# We filter Xes and sort them by id for easier processing later
+		xVarItems = [(k, v) for k, v in self._VarIDMap.items() if k[0] == 'X']
+		sortedXVarItems = sorted(xVarItems, key=lambda x: x[1])
+		with open(self._VarIDMapFilePath, "w") as f:
+			for k, id in sortedXVarItems:
+				# format: id r p g
+				_, r, p, g = k[0], k[1], k[2], k[3]
+				f.write(f"{id} {r} {p} {g}\n")
 
 	def _EncodeClauses(self):
 		logger.debug("Encoding clauses...")
