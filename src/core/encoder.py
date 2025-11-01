@@ -88,7 +88,7 @@ class ProblemInstance:
 		return math.comb(self.N, 2) * math.comb(self.R * self.G, self.T + 1)
 
 	def _EncodeGroupPartitionConstraint(self):
-		logger.debug("Encoding group partition constraints...")
+		logger.debug("Encoding group partition constraint...")
 		for r in range(self.R):
 			for p in range(self.N):
 				Xvars = [self._GetXVarID(r, p, g) for g in range(self.G)]
@@ -96,15 +96,15 @@ class ProblemInstance:
 				self._WriteClause(Xvars)
 				# At most one - use helper
 				self._EncodeAtMostKConstraint(Xvars, 1)
-		logger.debug("Finished encoding group partition constraints.")
+		logger.debug("Finished encoding group partition constraint.")
 
 	def _EncodeGroupSizeConstraint(self):
-		logger.debug("Encoding group size constraints...")
+		logger.debug("Encoding group size constraint...")
 		for r in range(self.R):
 			for g in range(self.G):
 				Xvars = [self._GetXVarID(r, p, g) for p in range(self.N)]
 				self._EncodeAtMostKConstraint(Xvars, self.S)
-		logger.debug("Finished encoding group size constraints.")
+		logger.debug("Finished encoding group size constraint.")
 
 	def _EncodeDefinitionOfZ(self):
 		logger.debug("Encoding definition of Z...")
@@ -125,7 +125,7 @@ class ProblemInstance:
 		logger.debug("Finished encoding definition of Z.")
 
 	def _EncodePairingConstraint(self):
-		logger.debug("Encoding pairing 'At Most T' constraints...")
+		logger.debug("Encoding pairing constraint...")
 		for p1 in range(self.N):
 			for p2 in range(p1 + 1, self.N):
 				ZvarsForPair = []
@@ -133,7 +133,7 @@ class ProblemInstance:
 					for g in range(self.G):
 						ZvarsForPair.append(self._GetZVarID(r, p1, p2, g))
 				self._EncodeAtMostKConstraint(ZvarsForPair, self.T)
-		logger.debug("Finished encoding pairing 'At Most T' constraints.")
+		logger.debug("Finished encoding pairing constraint.")
 
 	def _EncodeAtMostKConstraint(self, variables: list[int], K: int):
 		# Trivial case
