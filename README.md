@@ -81,14 +81,18 @@ $$
 
 ## State of application
 
-* Core
-  * Code refactoring
-    * More comments + documentation
-    * Better exception handling (no atm)
-* Test
-  * Write tests for the Core
+### TODO:
+
 * Frontend
-  * Create new project (C#, why not?)
+  * Create new project (C#)
   * Create the static pages
   * Write backend - basic workflow
   * Refactor
+
+### What the application cannot do:
+
+* Optimisation
+  * There are probably better ways to generate less clauses
+  * The clause generation could be multi-threadeds
+    * Each constraint would be written to its own file, then they would be synthesized at the end
+  * I might want to rewrite it to C# and make this a full C# project
