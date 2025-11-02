@@ -19,6 +19,9 @@ class ProblemInstance:
 			raise RuntimeError(f"Could not create the problem instance: {e}")
 
 	def _Init(self, N: int, G: int, S: int, R: int, T: int, outputFile: Path = None):
+		"""
+		Initializes the problem instance.
+		"""
 		self.N = N
 		self.G = G
 		self.S = S
@@ -39,6 +42,15 @@ class ProblemInstance:
 			self.OutputFile = outputFile
 
 	def _FillOutputFile(self):
+		"""
+		Fills the file with the CNF encoding
+
+		This method fills the file with the CNF encoding for the solver to take in as
+		an input.
+
+		Raises:
+		IOError: If the reading is interrupted, this exception is raised.
+		"""
 		try:
 			with open(self.OutputFile, "w") as oF:
 				numVars, numClauses = self._GetNumberOfVariables(), self._GetNumberOfClauses()
@@ -53,6 +65,21 @@ class ProblemInstance:
 			raise IOError(f"Could not fill the CNF output file: {e}")
 
 	def _WriteVarID(self):
+		"""
+		<Short one-line summary>
+
+		<More detailed explanation>
+
+		Args:
+		arg1 (type): Description of arg1.
+		arg2 (type): Description of arg2.
+
+		Returns:
+		type: Description of the return value.
+
+		Raises:
+		ExceptionType: Why this exception might be raised.
+		"""
 		logger.info(f"Writing variables to file: {self._VarIDMapFilePath}")
 		# We filter Xes and sort them by id for easier processing later
 		xVarItems = [(k, v) for k, v in self._VarIDMap.items() if k[0] == 'X']
