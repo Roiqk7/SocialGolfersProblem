@@ -86,12 +86,20 @@ def SetVervosity(V: int):
 	v (int): Verbosity level.
 	"""
 	if V == 0:
-		logLevel = logging.WARNING
+		logLevel = logging.WARNING4
 	elif V == 1:
 		logLevel = logging.INFO
 	elif V == 2:
 		logLevel = logging.DEBUG
 	else:
 		logLevel = logging.INFO
-	logger.setLevel(logLevel)
+	try:
+		# Colorlogs way of doing things...
+		import coloredlogs
+		logger.setLevel(logLevel)
+		for handler in logger.handlers:
+			handler.setLevel(logLevel)
+	except ModuleNotFoundError:
+		logger.setLevel(logLevel)
+
 	logger.debug(f"Verbosity level is set to {V} ({logging.getLevelName(logLevel)}).")

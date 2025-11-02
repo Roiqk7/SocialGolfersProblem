@@ -17,7 +17,8 @@ try:
 		level=logging.INFO,
 		fmt="[%(levelname)s][%(name)s][%(asctime)s]: %(message)s",
 		datefmt="%H:%M:%S.%f",
-		logger=logger)
+		logger=logger,
+		reconfigure=True)
 except ModuleNotFoundError:
 	logging.basicConfig(
 		level=logging.INFO,
