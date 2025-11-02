@@ -4,7 +4,6 @@ from globals import *
 from parser import ParseArgs
 from solverHandler import SolverHandler
 from time import perf_counter as clock
-import unittest
 
 def Main():
 	try:
