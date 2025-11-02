@@ -167,4 +167,4 @@ class Encapsulator:
 					f.write(str(p))
 		except Exception as e:
 			logger.error(e)
-			raise IOError(f"Could not write result: {e}")
+			raise IOError(f"Could not write result to {self.OutputFile}: {e}")
