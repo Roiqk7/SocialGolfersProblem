@@ -93,6 +93,9 @@ class ProblemInstance:
 				f.write(f"{id} {r} {p} {g}\n")
 
 	def _EncodeClauses(self):
+		"""
+		Calls all the clause generation methods.
+		"""
 		logger.debug("Encoding clauses...")
 		self._EncodeGroupPartitionConstraint()
 		self._EncodeGroupSizeConstraint()
@@ -101,6 +104,18 @@ class ProblemInstance:
 		logger.debug("Finished encoding clauses.")
 
 	def _GetVarID(self, var: tuple):
+		"""
+		Given a variable, returns its ID.
+
+		It is implemented using a simple hash map as there is not that many variables
+		even for large inputs.
+
+		Args:
+		var (tuple): A variable in the format ('type': char, params: tuple[int])
+
+		Returns:
+		int: The variable ID.
+		"""
 		if var in self._VarIDMap:
 			return self._VarIDMap[var]
 
@@ -110,20 +125,66 @@ class ProblemInstance:
 		return newID
 
 	def _GetNumberOfVariables(self) -> int:
+		"""
+		Returns the number of variables used in the CNF.
+
+		Since how the ID system works, the last ID - 1 corresponds to the variable count.
+
+		Returns:
+		int: Number of variables in the CNF.
+		"""
 		return self._NextID - 1
 
 	def _GetNumberOfClauses(self) -> int:
+		"""
+		Returns the number of clauses in the CNF.
+
+		Returns:
+		int: Number of clauses in the CNF.
+		"""
 		return self._ClauseCount
 
-	def _GetClause(self, arr: list[int]) -> str:
-		return " ".join(str(x) for x in arr) + " 0\n"
+	def _GetClause(self, vars: list[int]) -> str:
+		"""
+		Given a list of variables, returns the clause in the CNF.
 
-	def _WriteClause(self, arr: list[int]):
+		Simply creates a string with the variable IDs separated by spaces.
+
+		Args:
+		vars (list[int]): List of variable IDs.
+
+		Returns:
+		str: String representation of the clause.
+		"""
+		return " ".join(str(x) for x in vars) + " 0\n"
+
+	def _WriteClause(self, vars: list[int]):
+		"""
+		Writes a clause in the CNF.
+
+		Takes in the list of variable IDs, generates the corresponding clause,
+		then writes the clause into the temporary file.
+
+		Args:
+		vars (list[int]): List of variable IDs.
+
+		Raises:
+		IOError: If the reading is interrupted, this exception is raised.
+		"""
 		self._ClauseCount += 1
-		with open(self._TmpOutputFile, "a") as f:
-			f.write(self._GetClause(arr))
+		try:
+			with open(self._TmpOutputFile, "a") as f:
+				f.write(self._GetClause(vars))
+		except Exception as e:
+			logger.error(e)
+			raise IOError(f"Could not fill the CNF output file {self._TmpOutputFile}: {e}")
 
 	def _EncodeGroupPartitionConstraint(self):
+		"""
+		Encodes the group partition constraint into DIMACS CNF.
+
+		The constraint is encoded as a combination of "At least one" and "At most one".
+		"""
 		startTime = clock()
 		clauseCount = self._ClauseCount
 		logger.debug("Encoding group partition constraint...")
@@ -137,6 +198,12 @@ class ProblemInstance:
 		logger.debug(f"Finished encoding group partition constraint in {(clock() - startTime):.3f} using {self._ClauseCount - clauseCount} clauses.")
 
 	def _EncodeGroupSizeConstraint(self):
+		"""
+		Encodes the group size constraint into DIMACS CNF.
+
+		The constraint is encoded only as "at most S" as the "at least S" can be omitted
+		thanks to the group partition constraint.
+		"""
 		startTime = clock()
 		clauseCount = self._ClauseCount
 		logger.debug("Encoding group size constraint...")
@@ -147,6 +214,14 @@ class ProblemInstance:
 		logger.debug(f"Finished encoding group size constraint in {(clock() - startTime):.3f} using {self._ClauseCount - clauseCount} clauses.")
 
 	def _EncodeDefinitionOfZ(self):
+		"""
+		Defined the Z variable used for the pairing constraint.
+
+		The Z variable is defined using this equivalency: Z <=> X1 and X2, and it means
+		that a pair of players p1, p2 meet in group g during round r. This heavily
+		simplifies the pairing constraint encoding. Also to me it feels more intuitive
+		then bruteforcing it only using the X variables.
+		"""
 		startTime = clock()
 		clauseCount = self._ClauseCount
 		logger.debug("Encoding definition of Z...")
@@ -167,6 +242,13 @@ class ProblemInstance:
 		logger.debug(f"Finished encoding definition of Z in {(clock() - startTime):.3f} using {self._ClauseCount - clauseCount} clauses.")
 
 	def _EncodePairingConstraint(self):
+		"""
+		Encodes the pairing constraint into DIMACS CNF.
+
+		Thanks to the Z variables the encoding of this constraint simply reduces to:
+		each pair can meet at most T times. Which in my opinion is the natural way to
+		think about this constraint.
+		"""
 		startTime = clock()
 		clauseCount = self._ClauseCount
 		logger.debug("Encoding pairing constraint...")
@@ -179,15 +261,23 @@ class ProblemInstance:
 				self._EncodeAtMostKConstraint(ZvarsForPair, self.T)
 		logger.debug(f"Finished encoding pairing constraint in {(clock() - startTime):.3f} using {self._ClauseCount - clauseCount} clauses.")
 
-	def _EncodeAtMostKConstraint(self, variables: list[int], K: int):
+	def _EncodeAtMostKConstraint(self, vars: list[int], K: int):
+		"""
+		Encodes the constraint that out of N variables only K can be True.
+
+		The way we encode it is the following: The constraint "At Most K are True" is
+		equivalent to: "It is NOT True that > K + 1 are True." So for each combination
+		of K + 1 variables, we create a clause that forces at least one of them to be
+		False by negating all the K + 1 variables.
+
+		Args:
+		vars (list[int]): List of variable IDs.
+		K (int): How many variables can be True.
+		"""
 		# Trivial case
-		if len(variables) <= K:
+		if len(vars) <= K:
 			return
 
-		# The constraint "At Most K are True" is equivalent to:
-		# It is NOT True that > K + 1 are True.
-		for combo in itertools.combinations(variables, K + 1):
-			# For each combination of K + 1 variables, create a clause that forces
-			# at least one of them to be False (i.e., negate all K+1 variables).
+		for combo in itertools.combinations(vars, K + 1):
 			clause = [-var for var in combo]
 			self._WriteClause(clause)
