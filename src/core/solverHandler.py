@@ -15,6 +15,13 @@ class SolverHandler:
 			raise RuntimeError(f"Could not handle the problem instance: {e}")
 
 	def _Init(self, pi: ProblemInstance, verbosity: int):
+		"""
+		Initialize the problem instance.
+
+		Args:
+		pi (ProblemInstance): The problem instance.
+		verbosity (int): Solver verbosity.
+		"""
 		self.InputFile = pi.OutputFile
 		self.OutputFile = DEFAULT_SOLVER_OUTPUT_FILE_PATH
 		if verbosity in [0, 1, 2]:
@@ -24,6 +31,15 @@ class SolverHandler:
 			self.Verbosity = 0
 
 	def CallSolver(self):
+		"""
+		Calls the SAT solver.
+
+		Assumes glucose SAT solver is used It simply passes the encoded CNF file
+		to the solver.
+
+		Raises:
+		RuntimeError: If anything fails while calling or running the solver.
+		"""
 		try:
 			with open(self.InputFile) as f:
 				command = [
@@ -38,6 +54,21 @@ class SolverHandler:
 			raise RuntimeError(f"Could not execute solver: {e}")
 
 	def WriteResult(self, result):
+		"""
+		<Short one-line summary>
+
+		<More detailed explanation>
+
+		Args:
+		arg1 (type): Description of arg1.
+		arg2 (type): Description of arg2.
+
+		Returns:
+		type: Description of the return value.
+
+		Raises:
+		ExceptionType: Why this exception might be raised.
+		"""
 		try:
 			logger.info(f"Writing SAT solver result to {self.OutputFile}...")
 			data = result.stdout.decode("utf-8")

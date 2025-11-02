@@ -4,6 +4,15 @@ import logging
 import os
 
 def ParseArgs():
+	"""
+	Parses the command line arguments.
+
+	Returns:
+	agrparse.Namespace: The parsed arguments.
+
+	Raises:
+	RuntimeError: If the arguments could not be parsed.
+	"""
 	try:
 		logger.debug("Parsing arguments...")
 		parser = argparse.ArgumentParser(description="Social Golfers SAT Solver")
@@ -23,9 +32,24 @@ def ParseArgs():
 		return args
 	except Exception as e:
 		logger.error(e)
-		raise ValueError(f"Could not parse arguments: {e}")
+		raise RuntimeError(f"Could not parse arguments: {e}")
 
 def CheckArgs(args):
+	"""
+	Checks if the arguments are valid.
+
+	1. Checks if N = G * S
+	2. Checks if all values are positive integers
+	3. Checks if verbosity is valid
+	4. Checks if given files exist
+
+	Args:
+	arg1 (type): Description of arg1.
+	arg2 (type): Description of arg2.
+
+	Raises:
+	ValueError: If any of the arguments is invalid.
+	"""
 	# Consistency check: N = G * S
 	if args.N != args.G * args.S:
 		raise ValueError(
@@ -55,6 +79,12 @@ def CheckArgs(args):
 		raise ValueError(message)
 
 def SetVervosity(V: int):
+	"""
+	Sets the verbosity level.
+
+	Args:
+	v (int): Verbosity level.
+	"""
 	if V == 0:
 		logLevel = logging.WARNING
 	elif V == 1:
