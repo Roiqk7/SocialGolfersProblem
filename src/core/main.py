@@ -12,7 +12,7 @@ def Main():
 		args = ParseArgs()
 		N, G, S, R, T = args.N, args.G, args.S, args.R, args.T
 		problemInstance = ProblemInstance(N, G, S, R, T)
-		solver = SolverHandler(problemInstance)
+		solver = SolverHandler(problemInstance, args.V)
 		Encapsulator(solver.RawResult, N, R, G, S)
 		logger.info(f"Finished in {(clock() - startTime):.3f} seconds")
 		# Unsolvable - return 1 exit code else 0 if solvable
