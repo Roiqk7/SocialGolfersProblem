@@ -217,3 +217,124 @@ header .subtitle:hover,
 .close-popup:hover {
 	color: var(--yellow);
 }
+
+.background-golf-stuff {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	pointer-events: none;
+	z-index: -1;
+}
+
+.golf-ball {
+	position: absolute;
+	top: -15vh;
+
+	/* Ratio 1:1 */
+	width: 40px;
+	height: 40px;
+
+	opacity: 0.90; /* 90% Visibility */
+}
+
+@keyframes vertical-drop {
+	0% {
+		transform: translateY(0);
+		opacity: 0;
+	}
+	1% {
+		opacity: 0.90;
+	}
+	100% {
+		transform: translateY(115vh);
+		opacity: 0;
+	}
+}
+
+/* Individual Ball Positioning and Timing */
+.ball-1 {
+	left: 10%;
+	animation: vertical-drop 15s linear infinite;
+}
+
+.ball-2 {
+	left: 25%;
+	/* Smaller size, preserving ratio */
+	width: 30px;
+	height: 30px;
+	animation: vertical-drop 10s linear infinite 3s;
+}
+
+.ball-3 {
+	left: 40%;
+	animation: vertical-drop 18s linear infinite 6s;
+}
+
+.ball-4 {
+	left: 60%;
+	animation: vertical-drop 12s linear infinite 1s;
+}
+
+.ball-5 {
+	left: 75%;
+	/* Larger size, preserving ratio */
+	width: 50px;
+	height: 50px;
+	animation: vertical-drop 8s linear infinite 4s;
+}
+
+.ball-6 {
+	left: 90%;
+	animation: vertical-drop 16s linear infinite 8s;
+}
+
+@keyframes spin {
+	0% {
+		transform: translateY(0) rotate(0deg);
+	}
+	100% {
+		transform: translateY(115vh) rotate(720deg);
+	}
+}
+
+.golf-stick {
+	position: absolute;
+	top: -15vh;
+
+	/* Ratio 1:1 */
+	width: 50px;
+	height: 50px;
+
+	opacity: 0.90;
+
+	filter: drop-shadow(0 0 8px var(--cream));
+}
+
+/* Individual Stick Positioning and Timing */
+
+/* Stick 1: Far Left */
+.stick-1 {
+	left: 15%;
+	animation: spin 20s linear infinite 30s;
+}
+
+/* Stick 2: Left-Center */
+.stick-2 {
+	left: 35%;
+	animation: spin 25s linear infinite 60s;
+}
+
+/* Stick 3: Right-Center */
+.stick-3 {
+	left: 65%;
+	animation: spin 25s linear infinite 80s;
+}
+
+/* Stick 4: Far Right */
+.stick-4 {
+	left: 85%;
+	animation: spin 25s linear infinite 20s;
+}
