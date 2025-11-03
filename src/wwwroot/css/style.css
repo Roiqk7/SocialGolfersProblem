@@ -338,3 +338,66 @@ header .subtitle:hover,
 	left: 85%;
 	animation: spin 25s linear infinite 20s;
 }
+
+/* --- Golf Cart Animation Styles (Super Rare Easter Egg) --- */
+
+/* Keyframe for Aggressive Wobble and Fall (Updated Fade-Out) */
+@keyframes aggressive-wobble {
+	0% {
+		transform: translate(0, 0) rotate(5deg);
+		opacity: 0; /* Starts invisible */
+	}
+	5% {
+		opacity: 0.90; /* Fades in very quickly */
+	}
+	25% {
+		transform: translate(20px, 25vh) rotate(-10deg);
+	}
+	50% {
+		transform: translate(-20px, 50vh) rotate(10deg);
+	}
+	75% {
+		transform: translate(15px, 75vh) rotate(-5deg);
+	}
+	90% {
+		opacity: 0.90; /* NEW: Holds high opacity until 90% of the drop */
+	}
+	100% {
+		transform: translate(0, 115vh) rotate(0deg);
+		opacity: 0; /* Smooth fade-out over the last 10% */
+	}
+}
+
+/* Base Golf Cart Image Style (Ratio 336:396) */
+.golf-cart {
+	position: absolute;
+	top: -15vh; /* Start above the viewport */
+
+	/* 336:396 Aspect Ratio (Taller image) */
+	width: 80px;
+	height: 94px;
+
+	opacity: 0.90;
+
+	filter: drop-shadow(0 0 10px var(--cream)); /* Enhanced glow */
+}
+
+/* Individual Cart Positioning and Timing */
+
+/* Cart 1: Left */
+.cart-1 {
+	left: 10%;
+	animation: aggressive-wobble 20s ease-in-out infinite 180s;
+}
+
+/* Cart 2: Center */
+.cart-2 {
+	left: 45%;
+	animation: aggressive-wobble 20s ease-in-out infinite reverse 580s;
+}
+
+/* Cart 3: Right */
+.cart-3 {
+	left: 85%;
+	animation: aggressive-wobble 20s ease-in-out infinite 280s;
+}
