@@ -30,27 +30,31 @@ jobs:
         # Install build-essential (g++ and make) and zlib1g-dev (Glucose dependency)
         sudo apt-get install -y build-essential zlib1g-dev
 
-    - name: Build Glucose SAT Solver 🧩
+    - name: Build Glucose SAT Solver (Revised) 🧩
       run: |
-        # 1. Create the base directory structure
-        mkdir -p glucose
-        cd glucose
+        # 1. Ensure the directory structure exists
+        mkdir -p glucose/simp
+        cd glucose/simp
         
-        # 2. Download the source code for Glucose 4.1
+        # 2. Download the source code
         wget -q https://www.labri.fr/perso/lsimon/research/glucose/glucose-syrup-4.1.tgz
         
-        # 3. Extract the source code
+        # 3. Extract contents directly into 'simp'
         tar -xzf glucose-syrup-4.1.tgz
         
-        # 4. Rename the extracted folder to 'simp' to match the expected path (glucose/simp/glucose)
-        mv glucose-syrup-4.1 simp 
+        # 4. Move contents up one level to simplify the build path
+        mv glucose-syrup-4.1/* .
+        rm -r glucose-syrup-4.1 glucose-syrup-4.1.tgz
         
-        # 5. Compile the solver within the 'simp' directory
-        cd simp
-        make
+        # 5. Compile the solver. We use the 'simple' target which often works better.
+        # This should create the 'glucose' executable in the current directory (glucose/simp)
+        make simple 
         
-        # 6. Verify the executable exists (optional but helpful for debugging)
-        ls -l glucose
+        # 6. Verify the executable exists
+        if [ ! -f "glucose" ]; then
+          echo "ERROR: Glucose executable not found after compilation!"
+          exit 1
+        fi
         
         # Go back to the repository root
         cd ../..
