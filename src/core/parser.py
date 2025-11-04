@@ -86,7 +86,7 @@ def SetVervosity(V: int):
 	v (int): Verbosity level.
 	"""
 	if V == 0:
-		logLevel = logging.WARNING4
+		logLevel = logging.WARNING
 	elif V == 1:
 		logLevel = logging.INFO
 	elif V == 2:
