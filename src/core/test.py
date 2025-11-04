@@ -138,6 +138,16 @@ class SGPTests(unittest.TestCase):
                 self.assertTrue(self.SolutionChecker.CheckSolution(PROCESSED_RESULT_PATH, N, R, G, S, T))
 
         @timeout(1)
+        def testTrivialSolvable2(self):
+                N, G, S, R, T = 2, 1, 2, 2, 2
+                args = ["main", "--N", str(N), "--G", str(G), "--S", str(S), "--R", str(R), "--T", str(T), "--V",
+                        str(self.V)]
+                with patch("sys.argv", args):
+                        code = Main()
+                self.assertEqual(code, self.SOLVABLE_EXIT_CODE)
+                self.assertTrue(self.SolutionChecker.CheckSolution(PROCESSED_RESULT_PATH, N, R, G, S, T))
+
+        @timeout(1)
         def testTrivialUnsolvable(self):
                 N, G, S, R, T = 2, 1, 2, 2, 1
                 args = ["main", "--N", str(N), "--G", str(G), "--S", str(S), "--R", str(R), "--T", str(T),
