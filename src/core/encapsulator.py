@@ -1,4 +1,5 @@
 from globals import *
+from playerRegistry import PlayerRegistry
 from time import perf_counter as clock
 
 class Encapsulator:
@@ -27,6 +28,7 @@ class Encapsulator:
 		self.OutputFile = PROCESSED_RESULT_PATH
 		self.VarIDFile = VAR_ID_FILE_PATH
 		self.Vars = []
+		self.registry = PlayerRegistry()
 
 	def ProcessResult(self):
 		"""
@@ -163,8 +165,8 @@ class Encapsulator:
 					else:
 						f.write(",")
 
-					# Write player
-					f.write(str(p))
+					# Write player name
+					f.write(self.registry.getNameById(p))
 		except Exception as e:
 			logger.error(e)
 			raise IOError(f"Could not write result to {self.OutputFile}: {e}")
