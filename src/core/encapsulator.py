@@ -1,4 +1,5 @@
 from globals import *
+import io
 from playerRegistry import PlayerRegistry
 from time import perf_counter as clock
 
@@ -29,6 +30,7 @@ class Encapsulator:
 		self.VarIDFile = VAR_ID_FILE_PATH
 		self.Vars = []
 		self.registry = PlayerRegistry()
+		self.FormatedSchedule = None
 
 	def ProcessResult(self):
 		"""
@@ -52,6 +54,7 @@ class Encapsulator:
 				logger.info(f"Result: UNSAT; Writing into output file: {self.OutputFile}")
 				with open(self.OutputFile, "w") as f:
 					f.write("UNSAT")
+				print("UNSAT")
 			else:
 				# Problem is solvable, so we need to parse it
 				logger.info(f"Problem is solvable, constructing a model...")
@@ -69,7 +72,7 @@ class Encapsulator:
 				self.Vars = sorted(self.Vars, key=lambda var: (var[1], var[3]))
 
 				# 5. Now we construct the final output
-				self._FinilizeResult()
+				self.FormatedSchedule = self._CreateSchedule()
 			logger.debug(f"Finished result processing in {(clock() - startTime):.3f}.")
 		except Exception as e:
 			logger.error(e)
@@ -128,45 +131,42 @@ class Encapsulator:
 			logger.error(e)
 			raise IOError(f"Could not load model: {e}")
 
-	def _FinilizeResult(self):
+	def _CreateSchedule(self):
 		"""
-		Writes the result in a desired format.
+		Creates the schedule in a desired format.
 
 		After the self.Vars[i] is in the format of [bool, r, p, g], we can
 		have everything needed to write the result in the desired format.
 
-		Raises:
-		IOError: If the reading is interrupted, this exception is raised.
+		Returns:
+		str: The formatted schedule.
 		"""
-		try:
-			logger.info(f"Writing model into file: {self.OutputFile}")
-			with open(self.OutputFile, "w") as f:
-				currentRound = None
+		schedule = io.StringIO()
+
+		currentRound = None
+		currentGroup = None
+		firstInRound = True
+		firstInGroup = True
+
+		for b, r, p, g in self.Vars:
+			# If we move to a new round
+			if r != currentRound:
+				if not firstInRound:
+					schedule.write("\n")
+				currentRound = r
 				currentGroup = None
-				firstInRound = True
+				firstInRound = False
 				firstInGroup = True
 
-				for b, r, p, g in self.Vars:
-					# If we move to a new round
-					if r != currentRound:
-						if not firstInRound:
-							f.write("\n")
-						currentRound = r
-						currentGroup = None
-						firstInRound = False
-						firstInGroup = True
+			# If we move to a new group
+			if g != currentGroup:
+				if not firstInGroup:
+					schedule.write(";")
+				currentGroup = g
+				firstInGroup = False
+			else:
+				schedule.write(",")
 
-					# If we move to a new group
-					if g != currentGroup:
-						if not firstInGroup:
-							f.write(";")
-						currentGroup = g
-						firstInGroup = False
-					else:
-						f.write(",")
-
-					# Write player name
-					f.write(self.registry.getNameById(p))
-		except Exception as e:
-			logger.error(e)
-			raise IOError(f"Could not write result to {self.OutputFile}: {e}")
+			# Write player name
+			schedule.write(self.registry.getNameById(p))
+		return schedule.getvalue()
