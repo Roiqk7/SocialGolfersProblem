@@ -14,7 +14,7 @@ def Main():
 		problemInstance = ProblemInstance(N, G, S, R, T)
 		solver = SolverHandler(problemInstance, args.V)
 		encapsulator = Encapsulator(solver.RawResult, N, R, G, S)
-		ResultWriter(encapsulator.FormatedSchedule)
+		ResultWriter(N, G, S, R, T, encapsulator.FormatedSchedule)
 		logger.info(f"Finished in {(clock() - startTime):.3f} seconds")
 		# Unsolvable - return 1 exit code else 0 if solvable
 		return 1 if solver.RawResult.returncode == 20 else 0
