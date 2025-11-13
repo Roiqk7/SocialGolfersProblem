@@ -2,6 +2,7 @@ from globals import *
 import io
 from playerRegistry import PlayerRegistry
 from time import perf_counter as clock
+from resultWriter import ResultWriter
 
 class Encapsulator:
 	def __init__(self, rawResult, N: int, R: int, G: int, S: int):
@@ -51,10 +52,8 @@ class Encapsulator:
 			# 20 is Glucose code for UNSAT
 			# in our case that is the trivial case
 			if self._RawResult.returncode == 20:
-				logger.info(f"Result: UNSAT; Writing into output file: {self.OutputFile}")
-				with open(self.OutputFile, "w") as f:
-					f.write("UNSAT")
-				print("UNSAT")
+				self.FormatedSchedule = "UNSAT"
+				return
 			else:
 				# Problem is solvable, so we need to parse it
 				logger.info(f"Problem is solvable, constructing a model...")
