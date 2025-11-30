@@ -2,7 +2,6 @@ from globals import *
 import io
 from playerRegistry import PlayerRegistry
 from time import perf_counter as clock
-from resultWriter import ResultWriter
 
 class Encapsulator:
 	def __init__(self, rawResult, N: int, R: int, G: int, S: int):
