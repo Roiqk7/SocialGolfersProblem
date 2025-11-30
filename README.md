@@ -2,6 +2,63 @@
 
 Can $N$ golfers be scheduled to play in $G$ groups of size $S$ over $R$ rounds so that no pair of golfers plays together more than $T$ times?
 
+## Installation
+
+1. Clone the repository:
+
+```
+git clone https://github.com/Roiqk7/SocialGolfersProblem.git
+```
+
+2. Enter the repository
+
+```
+cd SocialGolfersProblem
+```
+
+3. Install [Glucose sat solver 4.2.1](https://github.com/audemard/glucose/releases/tag/4.2.1) and place it into the project directory.
+4. Rename the [Glucose sat solver 4.2.1](https://github.com/audemard/glucose/releases/tag/4.2.1) folder to `glucose`.
+5. Compile the [Glucose sat solver 4.2.1](https://github.com/audemard/glucose/releases/tag/4.2.1) simp version using according to [Glucose documentation](https://github.com/audemard/glucose?tab=readme-ov-file#how-to-use-it)
+
+*Note*: Ensure there is an executable file `glucose/simp/glucose`. If only a file like `glucose-simp` is generated, execute: `cp glucose-simp simp/glucose` to create it.
+
+## Usage
+
+```
+main.py [-h] [--N N] [--G G] [--S S] [--R R] [--T T] [--I I] [--O O] [--V {0,1,2}]
+```
+
+### Parameters
+
+* `-h`, `--help`   Show this help message and exit
+* `--N`        Number of golfers (default: 32)
+* `--G`        Number of groups per round (default: 8)
+* `--S`        Size of each group (default: 4)
+* `--R`        Number of rounds (default: 10)
+* `--T`        Max times a pair can meet (default: 1)
+* `--I`         Input file in DIMACS CNF format (default: data/in/input.cnf
+* `--O`        Output file of the SAT solver (default: data/out/solver.txt
+* `--V` {0,1,2}  Verbosity level for logging (default: 0)
+
+### Example usage
+
+* `python3 src/core/main.py --N 8 --G 4 --S 2 --R 5 --T 1`
+* `python3 src/core/main.py --N 4 --G 4 --S 1 --R 12 --T 10 --V 2`
+
+### Example instances
+
+1. `python3 src/core/main.py --N 4 --G 1 --S 4 --R 1 --T 1` (**SAT**)
+
+This is an instance with 4 players in one group who can meet at most once. Because there is just one round it is obviously solvable.
+
+2. `python3 src/core/main.py --N 4 --G 1 --S 4 --R 2 --T 1` (**UNSAT**)
+
+This is the same instance like before but with 2 rounds. Now the players meet for the 2nd time in the 2nd round and thus they fail the pairing constraint.
+
+3. `python3 src/core/main.py --N 16 --G 4 --S 4 --R 5 --T 1` (**SAT**)
+
+This might take up to a minute. I recommend adding `--V 2` if you are impatient to see that *something* is really happening.
+
 ## 📑 Problem description
 
 Given $N, G, S, R, T \in \mathbb{N}$, where $N = G \cdot S$ is the following statement $true$?
@@ -83,9 +140,6 @@ $$
 
 ### TODO:
 
-* Frontend
-  * Write backend
-  * Refactor
 * Finalize the project
   * Check everything
   * Improve documentation
@@ -98,3 +152,4 @@ $$
   * The clause generation could be multi-threaded
     * Each constraint would be written to its own file, then they would be synthesized at the end
   * I might want to rewrite it to C# and make this a full C# project
+  * Remove CLI and switch to full web app
