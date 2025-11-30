@@ -36,8 +36,8 @@ main.py [-h] [--N N] [--G G] [--S S] [--R R] [--T T] [--I I] [--O O] [--V {0,1,2
 * `--S`        Size of each group (default: 4)
 * `--R`        Number of rounds (default: 10)
 * `--T`        Max times a pair can meet (default: 1)
-* `--I`         Input file in DIMACS CNF format (default: data/in/input.cnf
-* `--O`        Output file of the SAT solver (default: data/out/solver.txt
+* `--I`         Input file in DIMACS CNF format (default: data/in/input.cnf)
+* `--O`        Output file of the SAT solver (default: data/out/solver.txt)
 * `--V` {0,1,2}  Verbosity level for logging (default: 0)
 
 ### Example usage
