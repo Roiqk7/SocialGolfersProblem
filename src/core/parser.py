@@ -101,5 +101,6 @@ def SetVervosity(V: int):
 			handler.setLevel(logLevel)
 	except ModuleNotFoundError:
 		logger.setLevel(logLevel)
+		logger.info("Install coloredlogs module using pip for prettier logging.")
 
 	logger.debug(f"Verbosity level is set to {V} ({logging.getLevelName(logLevel)}).")
