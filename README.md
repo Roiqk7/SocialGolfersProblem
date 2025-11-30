@@ -1,8 +1,8 @@
-# [Social Golfers Problem](https://en.wikipedia.org/wiki/Social_golfer_problem)
+# ⛳ [Social Golfers Problem](https://en.wikipedia.org/wiki/Social_golfer_problem)
 
 Can $N$ golfers be scheduled to play in $G$ groups of size $S$ over $R$ rounds so that no pair of golfers plays together more than $T$ times?
 
-## Installation
+## 📦 Installation
 
 1. Clone the repository:
 
@@ -22,13 +22,13 @@ cd SocialGolfersProblem
 
 *Note*: Ensure there is an executable file `glucose/simp/glucose`. If only a file like `glucose-simp` is generated, execute: `cp glucose-simp simp/glucose` to create it.
 
-## Usage
+## 🚀 Usage
 
 ```
 main.py [-h] [--N N] [--G G] [--S S] [--R R] [--T T] [--I I] [--O O] [--V {0,1,2}]
 ```
 
-### Parameters
+### ⚙️ Parameters
 
 * `-h`, `--help`   Show this help message and exit
 * `--N`        Number of golfers (default: 32)
@@ -40,12 +40,12 @@ main.py [-h] [--N N] [--G G] [--S S] [--R R] [--T T] [--I I] [--O O] [--V {0,1,2
 * `--O`        Output file of the SAT solver (default: data/out/solver.txt)
 * `--V` {0,1,2}  Verbosity level for logging (default: 0)
 
-### Example usage
+### 💡 Example usage
 
 * `python3 src/core/main.py --N 8 --G 4 --S 2 --R 5 --T 1`
 * `python3 src/core/main.py --N 4 --G 4 --S 1 --R 12 --T 10 --V 2`
 
-### Example instances
+### 🧪 Example instances
 
 1. `python3 src/core/main.py --N 4 --G 1 --S 4 --R 1 --T 1` (**SAT**)
 
@@ -71,11 +71,11 @@ The problem is to find a valid assignment of players to groups across all rounds
 2. **Group size** - In every round all groups must contain exactly $S$ players.
 2. **Pairing constraint** - Across all rounds, each pair of golfers share the same group at most $T$ times.
 
-## 🔠 Encoding
+## 🔢Encoding
 
 We encode the [Social Golfers Problem](https://en.wikipedia.org/wiki/Social_golfer_problem) as a [boolean satisfiability problem](https://en.wikipedia.org/wiki/Boolean_satisfiability_problem). The code itself generates encoding in [DIMACS CNF](https://jix.github.io/varisat/manual/0.2.0/formats/dimacs.html) format.
 
-### Variables
+### 🔠 Variables
 
 1. Player $p$ is in group $g$ during round $r$:
 
@@ -101,13 +101,7 @@ Z_{r,\{p_1,p_2\},g} =
 \end{cases}
 $$
 
-This gives us the total number of all variables:
-
-$$
-R \cdot \Big[N \cdot G + \binom{N}{2} \cdot (1 + G) \Big]
-$$
-
-### Constraints
+### ⚖️ Constraints
 
 1. Each player is exactly in one group per round. That can be written as follows:
 
@@ -136,14 +130,32 @@ $$
 \right)
 $$
 
-## 🗺️ State of application
+## 🧪 Experiments
 
-### TODO:
+The following experiments were performed on Macbook Air M2, 8GB
 
-* Finalize the project
-  * Check everything
-  * Improve documentation
-  * etc.
+|   N |   G |   S |   R |   T | Status   |     Time |
+|----:|----:|----:|----:|----:|:---------|---------:|
+|   2 |   1 |   2 |   1 |   1 | SAT      |  0.0185s |
+|   2 |   1 |   2 |   2 |   2 | SAT      |  0.0078s |
+|   2 |   1 |   2 |   3 |   3 | SAT      |  0.0079s |
+|   2 |   1 |   2 |   2 |   1 | UNSAT    |  0.0074s |
+|   2 |   1 |   2 |   4 |   3 | UNSAT    |  0.0075s |
+|   4 |   2 |   2 |   1 |   1 | SAT      |  0.0121s |
+|   4 |   4 |   1 |   5 |   1 | SAT      |  0.0808s |
+|   4 |   1 |   4 |   2 |   1 | UNSAT    |  0.0087s |
+|   8 |   4 |   2 |   3 |   1 | SAT      |  0.2730s |
+|   8 |   4 |   2 |   5 |   1 | SAT      |  0.8101s |
+|   8 |   2 |   4 |   5 |   1 | UNSAT    |  0.2246s |
+|  12 |   4 |   3 |   2 |   1 | SAT      |  0.6885s |
+|  12 |   4 |   3 |   3 |   1 | SAT      |  1.1454s |
+|  12 |   3 |   4 |   4 |   1 | UNSAT    |  3.0563s |
+|  15 |   5 |   3 |   4 |   1 | SAT      |  7.2626s |
+|  16 |   4 |   4 |   2 |   1 | SAT      | 13.2327s |
+|  16 |   4 |   4 |   5 |   1 | SAT      | 42.8772s |
+
+![graph](.img/graph.png)
+
 
 ### 🧮 Possible improvements:
 
