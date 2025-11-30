@@ -5,6 +5,7 @@ from pathlib import Path
 from unittest.mock import patch
 import signal
 import unittest
+import warnings
 
 def timeout(seconds=1):
         def decorator(func):
@@ -46,6 +47,13 @@ class SolutionChecker():
                 Returns:
                 bool: If the solution is valid.
                 """
+
+                warnings.warn(
+                        "SolutionChecker.CheckSolution is deprecated due to changed format in the main application's stdout return format.",
+                        DeprecationWarning,
+                        stacklevel=2
+                )
+
                 # 1. Load the solution
                 self._LoadSolution(solutionPath)
 
