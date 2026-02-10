@@ -9,8 +9,8 @@ def run():
 
         try:
             # Navigate to the app
-            print("Navigating to http://127.0.0.1:8000")
-            page.goto("http://127.0.0.1:8000")
+            print("Navigating to http://127.0.0.1:4200")
+            page.goto("http://127.0.0.1:4200")
 
             # Check title
             expect(page).to_have_title("Social Golfers Problem Solver")

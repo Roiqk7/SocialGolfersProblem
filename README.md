@@ -2,7 +2,20 @@
 
 Can $N$ golfers be scheduled to play in $G$ groups of size $S$ over $R$ rounds so that no pair of golfers plays together more than $T$ times?
 
-## 📦 Installation
+## 🐳 Docker Support
+
+The easiest way to run the application is using Docker.
+
+1. Ensure you have Docker and Docker Compose installed.
+2. Run the application:
+
+```bash
+docker compose up --build
+```
+
+3. Open your browser and navigate to `http://localhost:4200`.
+
+## 📦 Installation (Manual)
 
 1. Clone the repository:
 
@@ -166,9 +179,9 @@ The following experiments were performed on Macbook Air M2, 8GB
   * I might want to rewrite it to C# and make this a full C# project
   * Remove CLI and switch to full web app
 
-## 🌐 Web App
+## 🌐 Web App (Manual)
 
-To run the web application:
+To run the web application without Docker:
 
 1. Install dependencies:
    ```
