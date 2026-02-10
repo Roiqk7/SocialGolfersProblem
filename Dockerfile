@@ -21,10 +21,13 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Download and install Glucose SAT solver
+# We patch Main.cc to remove x86-specific FPU control code which fails on ARM/other architectures
+# We use '#' as sed delimiter because the pattern contains '|'
 RUN wget https://github.com/audemard/glucose/archive/refs/tags/4.2.1.tar.gz -O glucose.tar.gz \
     && tar -xvf glucose.tar.gz \
     && mv glucose-4.2.1 glucose \
     && rm glucose.tar.gz \
+    && sed -i 's#_FPU_GETCW(oldcw); newcw = (oldcw & ~_FPU_EXTENDED) | _FPU_DOUBLE; _FPU_SETCW(newcw);#// FPU control removed for portability#' glucose/simp/Main.cc \
     && cd glucose/simp \
     && make
 
