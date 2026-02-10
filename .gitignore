@@ -1,6 +1,9 @@
 # Custom
 glucose/
-data/
+data/in/*
+data/out/*
+!data/in/.gitkeep
+!data/out/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
