@@ -165,3 +165,19 @@ The following experiments were performed on Macbook Air M2, 8GB
     * Each constraint would be written to its own file, then they would be synthesized at the end
   * I might want to rewrite it to C# and make this a full C# project
   * Remove CLI and switch to full web app
+
+## 🌐 Web App
+
+To run the web application:
+
+1. Install dependencies:
+   ```
+   pip install fastapi uvicorn
+   ```
+
+2. Start the server:
+   ```
+   uvicorn src.core.server:app --port 8000
+   ```
+
+3. Open your browser and navigate to `http://localhost:8000`.
